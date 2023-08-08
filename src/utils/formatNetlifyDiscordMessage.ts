@@ -18,7 +18,7 @@ export function formatNetlifyDiscordMessage(data: NetlifyWebhookBody): any {
   const getDeployDescription = (state: string) => {
     switch (state) {
       case 'ready':
-        return `The site **[${data.name}](${data.url})** is ready.`;
+        return `The site **[${data.name}](${data.url})** is ready!`;
       case 'error':
         return `There was an error deploying the site **[${data.name}](${data.url})**.`;
       case 'building':
