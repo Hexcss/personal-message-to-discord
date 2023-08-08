@@ -1,24 +1,20 @@
 import { Router, Request, Response } from 'express';
 import { GithubWebhookBody } from '../interfaces/GitHubWebhookBody';
 import { config } from '../config';
-import twilio from 'twilio';
-import { formatWhatsAppMessage } from '../utils/formatWhatsappMessage';
+import axios from 'axios';
+import { formatDiscordMessage } from '../utils/formatWhatsappMessage';
 
 const router = Router();
 
 router.post('/webhook_handler', (req: Request<{}, {}, GithubWebhookBody>, res: Response) => {
     const data = req.body;
 
-    const whatsappMessage = formatWhatsAppMessage(data);
+    const discordMessage = formatDiscordMessage(data);
 
-    const client = twilio((config.TWILIO_ACCOUNT_SID as string), (config.TWILIO_AUTH_TOKEN as string));
-
-    client.messages.create({
-      from: `whatsapp:${(config.TWILIO_PHONE_NUMBER as string)}`,
-      body: whatsappMessage,
-      to: `whatsapp:${(config.RECIPIENT_PHONE_NUMBER as string)}` 
-    }).then((message) => {
-      console.log(message.sid);
+    axios.post(config.DISCORD_WEBHOOK_URL, {
+      content: discordMessage
+    }).then((response) => {
+      console.log(response.data);
       res.sendStatus(200);
     }).catch((error) => {
       console.error(error);
