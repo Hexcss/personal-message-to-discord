@@ -21,7 +21,7 @@ export function formatDiscordMessage(data: GithubWebhookBody): any {
   const dateComponents = formattedDate.split(/[\s,]+/); // Split by spaces and commas
   const capitalizedDate = dateComponents.map(capitalizeFirstLetter).join(' ');
   const commits = data.commits;
-  const pusherAvatar = data.pusher.avatar_url;
+  const pusherAvatar = data.sender.avatar_url;
 
   let commitMessages = "";
   commits.forEach((commit, index) => {
@@ -37,7 +37,7 @@ export function formatDiscordMessage(data: GithubWebhookBody): any {
         color: 3447003,
         author: {
           name: pusherName,
-          icon_url: pusherAvatar || 'default_avatar_url' // Use a default avatar if none provided
+          icon_url: pusherAvatar
         },
         fields: [
           {
