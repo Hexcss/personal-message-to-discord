@@ -10,11 +10,11 @@ router.post('/webhook_handler', (req: Request<{}, {}, GithubWebhookBody>, res: R
     const repoName = data.repository.name;
     const pusherName = data.pusher.name;
     const branch = data.ref.split('/').pop();
-    const timestamp = data.repository.pushed_at;
+    const timestamp = new Date(Number(data.repository.pushed_at)* 1000); // convert Unix timestamp to JavaScript Date object
+    const formattedDate = timestamp.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
 
-    console.log(`Repo: ${repoName}\nBranch: ${branch}\nPushed by: ${pusherName}\nWhen: ${timestamp}`);
-
-    const whatsappMessage = `Repo: ${repoName}\nBranch: ${branch}\nPushed by: ${pusherName}\nWhen: ${timestamp}`;
+    // Formatting the message with markdown
+    const whatsappMessage = `*Repository:* _${repoName}_\n*Branch:* _${branch}_\n*Pushed by:* _${pusherName}_\n*When:* _${formattedDate}_`;
 
     const client = twilio((config.TWILIO_ACCOUNT_SID as string), (config.TWILIO_AUTH_TOKEN as string));
 
