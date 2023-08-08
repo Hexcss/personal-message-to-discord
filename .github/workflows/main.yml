@@ -8,34 +8,46 @@ on:
 jobs:
   createPR:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Install jq
+      run: sudo apt-get install -y jq
+
+    - name: Setup GitHub CLI
+      run: |
+        # Clear the GITHUB_TOKEN
+        export GITHUB_TOKEN=
+
+        # Authenticate with the GitHub CLI
+        echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+        # Set GitHub CLI as git credential helper
+        git config --global credential.https://github.com.helper ''
+        git config --global 'credential.https://github.com' '!gh auth git-credential'
 
     - name: Create PR and Merge
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # Clear the GITHUB_TOKEN
-        export GITHUB_TOKEN=
-        
-        # Authenticate with the GitHub CLI
-        echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-        
-        # Set GitHub CLI as git credential helper
-        git config --global credential.https://github.com.helper ''
-        git config --global 'credential.https://github.com' '!gh auth git-credential'
-        
-        # Create a PR from develop to master without --json flag
+        # Create a PR from develop to master
         gh pr create --base master --head develop --title "Merging changes from develop" --body "Automatic PR for merging changes from develop to master" --draft
 
-        # Extract the PR URL of the latest PR (assuming it's the one we've just created)
+        # Extract the PR URL of the latest PR
         PR_URL=$(gh pr list --limit 1 --base master | awk '{print $4}')
         
-        # Check if PR can be merged without conflicts
-        PR_STATE=$(gh pr view "$PR_URL" --json mergeableState -q ".mergeableState")
-        
-        if [[ "$PR_STATE" == "clean" ]]; then
+        # Extract PR number from PR_URL
+        PR_NUMBER=$(basename $PR_URL)
+
+        # Use GitHub API to check the PR mergeable state
+        MERGEABLE_STATE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                            -H "Accept: application/vnd.github.v3+json" \
+                            "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" | \
+                            jq '.mergeable_state')
+
+        if [[ "$MERGEABLE_STATE" == "\"clean\"" ]]; then
           gh pr merge "$PR_URL" --auto --merge
           echo "Successfully merged the PR!"
         else
