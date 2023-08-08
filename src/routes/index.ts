@@ -4,7 +4,7 @@ import netlifyRouter from './netlify.webhook';
 
 const router = Router();
 
-router.use('/webhook_github', githubRouter);
-router.use('/webhook_netlify', netlifyRouter)
+router.use(githubRouter);
+router.use(netlifyRouter);
 
 export default router;
