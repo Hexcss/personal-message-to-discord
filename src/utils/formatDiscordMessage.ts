@@ -5,7 +5,7 @@ export function formatDiscordMessage(data: GithubWebhookBody): any {
   const pusherName = data.pusher.name;
   const branch = data.ref.split("/").pop();
   const timestamp = new Date(Number(data.repository.pushed_at) * 1000);
-  const formattedDate = timestamp.toLocaleDateString("en-US", {
+  const formattedDate = timestamp.toLocaleDateString("es-ES", {
     weekday: "long",
     year: "numeric",
     month: "long",
