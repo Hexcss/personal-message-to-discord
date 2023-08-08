@@ -26,12 +26,15 @@ jobs:
         git config --global credential.https://github.com.helper ''
         git config --global 'credential.https://github.com' '!gh auth git-credential'
         
-        # Create a PR from develop to master
-        PR_URL=$(gh pr create --base master --head develop --title "Merging changes from develop" --body "Automatic PR for merging changes from develop to master" --draft --json url -q ".url")
+        # Create a PR from develop to master without --json flag
+        gh pr create --base master --head develop --title "Merging changes from develop" --body "Automatic PR for merging changes from develop to master" --draft
+
+        # Extract the PR URL of the latest PR (assuming it's the one we've just created)
+        PR_URL=$(gh pr list --limit 1 --base master | awk '{print $4}')
         
         # Check if PR can be merged without conflicts
         PR_STATE=$(gh pr view "$PR_URL" --json mergeableState -q ".mergeableState")
-
+        
         if [[ "$PR_STATE" == "clean" ]]; then
           gh pr merge "$PR_URL" --auto --merge
           echo "Successfully merged the PR!"
