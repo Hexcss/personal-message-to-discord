@@ -1,4 +1,7 @@
 export const config = {
-  SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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',
+  TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
+  TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
+  TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER,
+  RECIPIENT_PHONE_NUMBER: process.env.RECIPIENT_PHONE_NUMBER,
   PORT: process.env.PORT || 5000,
 };
