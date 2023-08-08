@@ -15,18 +15,31 @@ export function formatNetlifyDiscordMessage(data: NetlifyWebhookBody): any {
     }
   };
 
+  const getDeployDescription = (state: string) => {
+    switch (state) {
+      case 'deployed':
+        return `The site **[${data.name}](${data.url})** has been successfully deployed.`;
+      case 'error':
+        return `There was an error deploying the site **[${data.name}](${data.url})**.`;
+      case 'building':
+        return `The site **[${data.name}](${data.url})** is currently building.`;
+      default:
+        return `The site **[${data.name}](${data.url})** is in the state: ${data.state}.`;
+    }
+  };
+
   return {
     embeds: [
       {
         title: "Netlify Deploy Update",
-        description: `The site **[${data.name}](${data.site_url})** has been ${data.state}.`,
+        description: getDeployDescription(data.state),
         color: getStatusColor(data.state),
         thumbnail: {
-          url: "https://www.netlify.com/img/press/logos/logomark.png" // Netlify logo
+          url: "https://cdn.dribbble.com/users/1059367/screenshots/2719107/bot_2.gif" // Netlify logo
         },
         author: {
           name: "Netlify",
-          icon_url: "https://www.netlify.com/img/press/logos/logomark.png",
+          icon_url: "https://th.bing.com/th/id/OIP.Nsf0nb8nB7JNEQgygk8ezwHaHa?pid=ImgDet&rs=1",
         },
         fields: [
           {
@@ -37,7 +50,7 @@ export function formatNetlifyDiscordMessage(data: NetlifyWebhookBody): any {
         ],
         footer: {
           text: "Netlify Deploy Notifications",
-          icon_url: "https://www.netlify.com/img/press/logos/logomark.png"
+          icon_url: "https://jeancochrane.com/static/images/blog/netlify-identity-dealbreakers/netlify-logo.png"
         },
         timestamp: new Date().toISOString(),
       },
