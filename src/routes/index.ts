@@ -1,9 +1,8 @@
 import { Router } from 'express';
-import webhookRouter from './webhooks';
+import discordRouter from './github.webhook';
 
 const router = Router();
 
-router.use('/', webhookRouter);
-router.use('/webhook_handler', webhookRouter);
+router.use('/webhook_handler', discordRouter);
 
 export default router;

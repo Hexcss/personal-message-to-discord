@@ -4,7 +4,7 @@ function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function formatDiscordMessage(data: GithubWebhookBody): any {
+export function formatGitHubDiscordMessage(data: GithubWebhookBody): any {
   const repoName = data.repository.name;
   const pusherName = data.pusher.name;
   const branch = data.ref.split("/").pop();

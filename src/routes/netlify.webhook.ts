@@ -1,20 +1,20 @@
 import axios from "axios";
 import { Router, Request, Response } from "express";
-import { GithubWebhookBody } from "../interfaces/GitHubWebhookBody";
+import { NetlifyWebhookBody } from "../interfaces/NetlifyWebhookBody";
 import { config } from "../config";
-import { formatDiscordMessage } from "../utils/formatDiscordMessage";
+import { formatNetlifyDiscordMessage } from "../utils/formatNetlifyDiscordMessage";
 
 const router = Router();
 
 router.post(
-  "/webhook_discord",
-  (req: Request<{}, {}, GithubWebhookBody>, res: Response) => {
+  "/webhook_netlify",
+  (req: Request<{}, {}, NetlifyWebhookBody>, res: Response) => {
     const data = req.body;
 
-    const discordMessage = formatDiscordMessage(data);
+    const discordMessage = formatNetlifyDiscordMessage(data);
 
     axios
-      .post(config.DISCORD_WEBHOOK_URL as string, discordMessage)
+      .post(config.DISCORD_NETLIFY_WEBHOOK as string, discordMessage)
       .then((response) => {
         console.log(response.data);
         res.sendStatus(200);
