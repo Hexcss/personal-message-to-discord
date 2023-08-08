@@ -7,4 +7,10 @@ export interface GithubWebhookBody {
     name: string;
   };
   ref: string;
+  commits: {
+    message: string;
+    author: {
+      name: string;
+    };
+  }[];
 };
