@@ -1,6 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
+import path from 'path';
 import routes from './routes';
 
 const app = express();
@@ -8,6 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.use(routes);
 
