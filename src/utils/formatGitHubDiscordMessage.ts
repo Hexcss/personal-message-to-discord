@@ -4,6 +4,15 @@ function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function truncateAndCleanMessage(message: string, maxLength: number = 50): string {
+  // Remove any line breaks and truncate the message if it's too long
+  let cleanedMessage = message.replace(/\r?\n|\r/g, " ").trim();
+  if (cleanedMessage.length > maxLength) {
+    cleanedMessage = cleanedMessage.substring(0, maxLength - 3) + "...";
+  }
+  return cleanedMessage;
+}
+
 export function formatGitHubDiscordMessage(data: GithubWebhookBody): any {
   const repoName = data.repository.name;
   const pusherName = data.pusher.name;
@@ -25,7 +34,8 @@ export function formatGitHubDiscordMessage(data: GithubWebhookBody): any {
 
   let commitMessages = "";
   commits.forEach((commit, index) => {
-    commitMessages += `\n**[${index + 1}. ${commit.message}]** (by *${commit.author.name}*)`;
+    const cleanedCommitMessage = truncateAndCleanMessage(commit.message);
+    commitMessages += `\n**[${index + 1}. ${cleanedCommitMessage}]** (by *${commit.author.name}*)`;
   });
 
   // Use embed format
