@@ -4,7 +4,7 @@ export function formatNetlifyDiscordMessage(data: NetlifyWebhookBody): any {
 
   const getStatusColor = (state: string) => {
     switch (state) {
-      case 'deployed':
+      case 'ready':
         return 3066993; // Green
       case 'error':
         return 16711680; // Red
@@ -17,8 +17,8 @@ export function formatNetlifyDiscordMessage(data: NetlifyWebhookBody): any {
 
   const getDeployDescription = (state: string) => {
     switch (state) {
-      case 'deployed':
-        return `The site **[${data.name}](${data.url})** has been successfully deployed.`;
+      case 'ready':
+        return `The site **[${data.name}](${data.url})** is ready.`;
       case 'error':
         return `There was an error deploying the site **[${data.name}](${data.url})**.`;
       case 'building':
