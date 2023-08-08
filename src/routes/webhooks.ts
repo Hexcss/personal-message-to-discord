@@ -7,7 +7,7 @@ import { formatDiscordMessage } from "../utils/formatDiscordMessage";
 const router = Router();
 
 router.post(
-  "/webhook_handler",
+  "/webhook_discord",
   (req: Request<{}, {}, GithubWebhookBody>, res: Response) => {
     const data = req.body;
 
