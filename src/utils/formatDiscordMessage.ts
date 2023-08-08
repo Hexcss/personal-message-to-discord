@@ -1,5 +1,9 @@
 import { GithubWebhookBody } from "../interfaces/GitHubWebhookBody";
 
+function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export function formatDiscordMessage(data: GithubWebhookBody): any {
   const repoName = data.repository.name;
   const pusherName = data.pusher.name;
@@ -14,13 +18,14 @@ export function formatDiscordMessage(data: GithubWebhookBody): any {
     minute: "numeric",
     second: "numeric",
   });
+  const dateComponents = formattedDate.split(/[\s,]+/); // Split by spaces and commas
+  const capitalizedDate = dateComponents.map(capitalizeFirstLetter).join(' ');
   const commits = data.commits;
+  const pusherAvatar = data.pusher.avatar_url;
 
   let commitMessages = "";
   commits.forEach((commit, index) => {
-    commitMessages += `\n${index + 1}. ${commit.message} (by ${
-      commit.author.name
-    })`;
+    commitMessages += `\n**[${index + 1}. ${commit.message}]** (by *${commit.author.name}*)`;
   });
 
   // Use embed format
@@ -28,16 +33,16 @@ export function formatDiscordMessage(data: GithubWebhookBody): any {
     embeds: [
       {
         title: "📣 New Push Event",
+        url: `https://github.com/${pusherName}/${repoName}`, // Add URL to repository
         color: 3447003,
+        author: {
+          name: pusherName,
+          icon_url: pusherAvatar || 'default_avatar_url' // Use a default avatar if none provided
+        },
         fields: [
           {
             name: "Repository",
-            value: repoName,
-            inline: true,
-          },
-          {
-            name: "Pusher",
-            value: pusherName,
+            value: `[${repoName}](https://github.com/${pusherName}/${repoName})`, // Add link to repository
             inline: true,
           },
           {
@@ -47,7 +52,7 @@ export function formatDiscordMessage(data: GithubWebhookBody): any {
           },
           {
             name: "Time",
-            value: formattedDate,
+            value: capitalizedDate,
             inline: true,
           },
           {
@@ -55,6 +60,16 @@ export function formatDiscordMessage(data: GithubWebhookBody): any {
             value: commitMessages,
           },
         ],
+        image: {
+          url: "https://opensource.com/sites/default/files/styles/image-full-size/public/lead-images/github-universe.jpg?itok=lwRZddXA",
+        },
+        thumbnail: {
+          url: "https://blog.rapidapi.com/wp-content/uploads/2017/01/octocat.gif",
+        },
+        footer: {
+          text: `${data.commits.length} commits in this push`,
+        },
+        timestamp: new Date().toISOString(),
       },
     ],
   };
