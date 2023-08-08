@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import discordRouter from './github.webhook';
+import githubRouter from './github.webhook';
+import netlifyRouter from './netlify.webhook';
 
 const router = Router();
 
-router.use('/webhook_handler', discordRouter);
+router.use('/webhook_github', githubRouter);
+router.use('/webhook_netlify', netlifyRouter)
 
 export default router;
