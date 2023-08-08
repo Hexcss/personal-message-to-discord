@@ -16,4 +16,6 @@ export interface GithubWebhookBody {
       name: string;
     };
   }[];
+  deleted: boolean;
+  created: boolean;
 };
