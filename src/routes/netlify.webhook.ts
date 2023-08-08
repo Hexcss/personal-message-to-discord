@@ -11,6 +11,8 @@ router.post(
   (req: Request<{}, {}, NetlifyWebhookBody>, res: Response) => {
     const data = req.body;
 
+    console.log("Netlify Data: ", data);
+
     const discordMessage = formatNetlifyDiscordMessage(data);
 
     axios
