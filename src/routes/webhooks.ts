@@ -11,7 +11,7 @@ router.post('/webhook_handler', (req: Request<{}, {}, GithubWebhookBody>, res: R
 
     const discordMessage = formatDiscordMessage(data);
 
-    axios.post(config.DISCORD_WEBHOOK_URL, {
+    axios.post((config.DISCORD_WEBHOOK_URL as string), {
       content: discordMessage
     }).then((response) => {
       console.log(response.data);
