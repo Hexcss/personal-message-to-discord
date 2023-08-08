@@ -5,7 +5,9 @@ export interface GithubWebhookBody {
   };
   pusher: {
     name: string;
-    avatar_url: string; // Optional avatar URL
+  };
+  sender: {
+    avatar_url: string; 
   };
   ref: string;
   commits: {
