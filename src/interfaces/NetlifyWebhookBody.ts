@@ -1,5 +1,5 @@
 export interface NetlifyWebhookBody {
-  site_url: string;
+  url: string;
   name: string;
   state: string; // 'building', 'deployed', etc.
   title: string;
