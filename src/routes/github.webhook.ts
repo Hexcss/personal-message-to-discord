@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Router, Request, Response } from "express";
 import { GithubWebhookBody } from "../interfaces/GitHubWebhookBody";
-import { config } from "../config";
 import { formatGitHubDiscordMessage } from "../utils/formatGitHubDiscordMessage";
 
 const router = Router();
@@ -13,8 +12,10 @@ router.post(
 
     const discordMessage = formatGitHubDiscordMessage(data);
 
+    console.log(process.env.DISCORD_GITHUB_WEBHOOK)
+
     axios
-      .post(config.DISCORD_GITHUB_WEBHOOK as string, discordMessage)
+      .post(process.env.DISCORD_GITHUB_WEBHOOK as string, discordMessage)
       .then((response) => {
         console.log(response.data);
         res.sendStatus(200);

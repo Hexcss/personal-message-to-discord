@@ -7,4 +7,4 @@ import app from './app';
 admin.initializeApp();
 
 // Export the Express app as a Cloud Function
-export const api = functions.https.onRequest(app);
+export const api = functions.runWith({ secrets: ['DISCORD_GITHUB_WEBHOOK', 'DISCORD_NETLIFY_WEBHOOK'] }).https.onRequest(app);

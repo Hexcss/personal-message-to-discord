@@ -7,11 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "serve": "npm run dev && firebase emulators:start --only functions",
-    "shell": "npm run dev && firebase functions:shell",
-    "dev": "ts-node-dev --respawn --transpile-only index.ts",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "dev": "ts-node src/index.ts",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "start": "npm run shell"
   },
   "engines": {
     "node": "18"

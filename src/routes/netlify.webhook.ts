@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Router, Request, Response } from "express";
 import { NetlifyWebhookBody } from "../interfaces/NetlifyWebhookBody";
-import { config } from "../config";
 import { formatNetlifyDiscordMessage } from "../utils/formatNetlifyDiscordMessage";
 
 const router = Router();
@@ -13,8 +12,10 @@ router.post(
 
     const discordMessage = formatNetlifyDiscordMessage(data);
 
+    console.log(process.env.DISCORD_NETLIFY_WEBHOOK)
+
     axios
-      .post(config.DISCORD_NETLIFY_WEBHOOK as string, discordMessage)
+      .post(process.env.DISCORD_NETLIFY_WEBHOOK as string, discordMessage)
       .then((response) => {
         console.log(response.data);
         res.sendStatus(200);
