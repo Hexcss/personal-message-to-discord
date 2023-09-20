@@ -1,6 +1,10 @@
+//@ts-ignore
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 import app from './app';
-import { config } from './config';
 
-app.listen(config.PORT, () => {
-    console.log(`Server is running on port ${config.PORT}`);
-});
+// Initialize Firebase Admin
+admin.initializeApp();
+
+// Export the Express app as a Cloud Function
+export const api = functions.https.onRequest(app);

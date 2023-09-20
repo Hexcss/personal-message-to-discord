@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
+import { defineString } from 'firebase-functions/params';
 
 dotenv.config();
 
 export const config = {
-  DISCORD_GITHUB_WEBHOOK: process.env.DISCORD_GITHUB_WEBHOOK || '',
-  DISCORD_NETLIFY_WEBHOOK: process.env.DISCORD_NETLIFY_WEBHOOK || '',
-  PORT: process.env.PORT || 5000,
+  DISCORD_GITHUB_WEBHOOK: defineString("DISCORD_GITHUB_WEBHOOK ")|| '',
+  DISCORD_NETLIFY_WEBHOOK: defineString("DISCORD_NETLIFY_WEBHOOK")|| '',
 };
