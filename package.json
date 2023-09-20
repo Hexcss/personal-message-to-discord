@@ -16,7 +16,7 @@
   "engines": {
     "node": "18"
   },
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "author": "",
   "license": "ISC",
   "devDependencies": {
