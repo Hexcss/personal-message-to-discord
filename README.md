@@ -23,7 +23,7 @@
 
 1. Clone it:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/Webhook2Discord.git
+   git clone https://github.com/Hexcss/Webhook2Discord.git
    ```
 2. Dive in:
    ```bash
