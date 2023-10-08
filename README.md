@@ -1,6 +1,6 @@
-# Webhook2Discord 🌐✉️
+# Message2Discord 🌐✉️
 
-> **Elevate your notifications game!** Webhook2Discord is a sleek middleware designed to push your GitHub, Netlify, and more notifications straight to Discord.
+> **Elevate your notifications game!** Message2Discord is a sleek middleware designed to push your GitHub, Netlify, and more notifications straight to Discord.
 
 <p align="center">
   <img src="https://www.mustips.com/wp-content/uploads/2020/03/discord-bot-696x364.png" alt="Webhook2Discord Banner" width="500">
@@ -23,7 +23,7 @@
 
 1. Clone it:
    ```bash
-   git clone https://github.com/Hexcss/Webhook2Discord.git
+   git clone https://github.com/Hexcss/personal-message-to-discord.git
    ```
 2. Dive in:
    ```bash
@@ -46,7 +46,7 @@ After the setup dance, your GitHub or Netlify triggers will summon stylish notif
 
 ## Contributing 🤝
 
-Got ideas? Let's collaborate! Check the [issues](https://github.com/YOUR_USERNAME/Webhook2Discord/issues).
+Got ideas? Let's collaborate! Check the [issues](https://github.com/Hexcss/personal-message-to-discord/issues).
 
 1. Fork 🍴
 2. Feature branch:
